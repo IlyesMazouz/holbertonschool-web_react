@@ -3,44 +3,46 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
+
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, '../dist'),
-    clean: true,
   },
-  mode: 'development',
+
   devServer: {
     static: path.resolve(__dirname, '../dist'),
-    hot: true,
-    port: 3000,
-    open: true,
+    open: true,  
+    hot: true,   
   },
+
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.js$/, 
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
+            presets: ['@babel/preset-env', '@babel/preset-react'],
           },
         },
       },
       {
-        test: /\.css$/,
+        test: /\.css$/,  
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(png|jpe?g|gif|svg)$/i,
+        test: /\.(png|jpg|jpeg|gif)$/i, 
         type: 'asset/resource',
       },
     ],
   },
+
+  devtool: 'inline-source-map',
+
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './public/index.html', 
     }),
   ],
-  devtool: 'inline-source-map',
 };
