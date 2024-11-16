@@ -1,15 +1,7 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.App-footer {
+	background-color: #282c34;
+	color: white;
+	text-align: center;
+	padding: 20px;
   }
-
-.footer{
-  margin-top: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    border-top: #e0003c solid 4px;
-  }
- 
+  

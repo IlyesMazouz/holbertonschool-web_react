@@ -1,75 +1,33 @@
-import React, { Component } from 'react';
-import Header from '../Header/Header';
-import './App.css';
-import PropTypes from 'prop-types';
-import Login from '../Login/Login';
-import CourseList from '../CourseList/CourseList';
-import Notifications from '../Notifications/Notifications';
-import Footer from '../Footer/Footer';
+import React from "react";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
+import Notifications from "../Notifications/Notifications";
+import CourseList from "../CourseList/CourseList";
+import Login from "../Login/Login";
+import "./App.css";
 
+const coursesList = [
+  { id: 1, name: "ES6", credit: 60 },
+  { id: 2, name: "Webpack", credit: 20 },
+  { id: 3, name: "React", credit: 40 },
+];
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      listCourses: [
-        { id: 1, name: 'ES6', credit: 60 },
-        { id: 2, name: 'Webpack', credit: 20 },
-        { id: 3, name: 'React', credit: 40 }
-      ],
-      listNotifications: [
-        { id: 1, type: 'default', value: 'New course available' },
-        { id: 2, type: 'urgent', value: 'New resume available' },
-        { id: 3, type: 'urgent', html: { __html: '<strong>Urgent requirement</strong> - complete by EOD' } }
-      ]
-    };
+function App({ isLoggedIn = false, displayDrawer = false }) {
+  return (
+    <div className="App">
+      <div className="notifications-wrapper">
+        <Notifications displayDrawer={displayDrawer} />
+      </div>
 
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-  }
+      <Header />
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown);
-  }
+      <div className="app-body">
+        {isLoggedIn ? <CourseList courses={coursesList} /> : <Login />}
+      </div>
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown);
-  }
-
-  handleKeyDown(event) {
-    if (event.ctrlKey && event.key === 'h') {
-      event.preventDefault();
-      alert('Logging you out');
-      this.props.logOut();
-    }
-  }
-
-  render() {
-    const { isLoggedIn } = this.props;
-    const { listCourses, listNotifications } = this.state;
-
-    return (
-      <>
-        <div className="App">
-          <Notifications listNotifications={listNotifications}/>
-          <Header />
-          <div className="App-body">
-            {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
-          </div>
-          <Footer />
-        </div>
-      </>
-    );
-  }
+      <Footer />
+    </div>
+  );
 }
-
-App.propTypes = {
-  isLoggedIn: PropTypes.bool,
-  logOut: PropTypes.func
-};
-
-App.defaultProps = {
-  isLoggedIn: false,
-  logOut: () => {}
-};
 
 export default App;

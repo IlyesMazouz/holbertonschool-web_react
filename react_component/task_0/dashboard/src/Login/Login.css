@@ -1,18 +1,12 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }  
-
-.body{
-    display: flex;
-    flex-direction: column;
-    padding: 45px;
-    gap: 20px;
-  
+.Login {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin-top: 20px;
   }
   
-  .body_container{
-    display: flex;
-    gap: 10px;
+  .Login label, .Login input, .Login button {
+	margin: 5px 0;
   }
+  

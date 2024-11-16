@@ -1,26 +1,8 @@
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.header{
-  display: flex;
-  border-bottom: #e0003c solid 4px;
-  justify-content: space-between;
-  height: 230px;
-}
-
-.logoContainer {
-  display: flex;
-  align-items: center;
-}
-
-.header img{
-  width: 200px;
-}
-.header h1{
-  display: flex;
-  align-items: center;
-  color: #e0003c;
-}
+.App-body{
+    padding: 50px;
+    border-bottom: 3px solid #dc1010;
+    height: 50vh;
+  }
+  .App-body > *{
+    margin: 5px;
+  }

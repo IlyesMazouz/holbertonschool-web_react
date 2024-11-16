@@ -1,38 +1,23 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import CourseListRow from './CourseListRow';
-import CourseList from './CourseList';
+import React from "react";
+import { shallow } from "enzyme";
+import CourseList from "./CourseList";
 
-
-describe('CourseList', () => {
-  it('renders without crashing', () => {
-    shallow(<CourseList />);
-  });
-
-  describe('when listCourses is empty or not provided', () => {
-    it('renders correctly with empty listCourses', () => {
-      const wrapper = shallow(<CourseList listCourses={[]} />);
-      expect(wrapper.containsMatchingElement(<CourseListRow textFirstCell="No course available yet" />)).toBe(true);
-      expect(wrapper.find(CourseListRow).length).toBe(3);
-    });
-
-    it('renders correctly if listCourses is not passed', () => {
-      const wrapper = shallow(<CourseList />);
-      expect(wrapper.containsMatchingElement(<CourseListRow textFirstCell="No course available yet" />)).toBe(true);
-      expect(wrapper.find(CourseListRow).length).toBe(3);
-    });
-  });
-
-  describe('when listCourses contains elements', () => {
-    const listCourses = [
-      { id: 1, name: 'ES6', credit: 60 },
-      { id: 2, name: 'Webpack', credit: 20 },
-      { id: 3, name: 'React', credit: 40 }
+describe("<CourseList />", () => {
+  it("renders 5 rows when given an array of courses", () => {
+    const courses = [
+      { id: 1, name: "ES6", credit: 60 },
+      { id: 2, name: "Webpack", credit: 20 },
+      { id: 3, name: "React", credit: 40 },
     ];
+    const wrapper = shallow(<CourseList courses={courses} />);
+    const rows = wrapper.find("CourseListRow");
+    expect(rows).toHaveLength(5);
+  });
 
-    it('renders the correct number of CourseListRows, including headers', () => {
-      const wrapper = shallow(<CourseList listCourses={listCourses} />);
-      expect(wrapper.find(CourseListRow).length).toBe(5);
-    });
+  it("renders 1 row when courses array is empty", () => {
+    const wrapper = shallow(<CourseList courses={[]} />);
+    const rows = wrapper.find("CourseListRow");
+    expect(rows).toHaveLength(1);
+    expect(rows.at(0).prop("textFirstCell")).toEqual("No course available yet");
   });
 });

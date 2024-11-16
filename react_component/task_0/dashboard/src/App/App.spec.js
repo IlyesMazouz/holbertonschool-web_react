@@ -4,7 +4,6 @@ import App from "./App";
 import Login from "../Login/Login";
 import CourseList from "../CourseList/CourseList";
 
-
 describe("<App />", () => {
   it("renders the Login component when isLoggedIn is false", () => {
     const wrapper = shallow(<App isLoggedIn={false} />);
