@@ -1,23 +1,18 @@
 import React from 'react';
+import logo from '../assets/holberton-logo.png';
 import './Header.css';
 
 function Header() {
   return (
-    <header className="App-header">
-      <img src="/logo.svg" className="App-logo" alt="logo" />
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-    </header>
-  );
-}
+      <header className="header">   
+      <div className='logoContainer'>
+        <img src={logo} className="App-logo" alt="logo" />
+        <h1>
+        School dashboard
+        </h1>
+        </div>
+      </header>
+  )
+};
 
 export default Header;
