@@ -1,16 +1,15 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { shallow } from 'enzyme';
 import Header from './Header';
 
 describe('Header', () => {
-  test('should contain the Holberton logo', () => {
-    render(<Header />);
-    const logo = screen.getByAltText(/holberton logo/i);
-    expect(logo).toBeInTheDocument();
+  it('renders without crashing', () => {
+    shallow(<Header />);
   });
 
-  test('should contain the correct heading h1 element', () => {
-    render(<Header />);
-    const heading = screen.getByRole('heading', { name: /Welcome to Holberton/i });
-    expect(heading).toBeInTheDocument();
+  it('renders an img and h1 tags', () => {
+    const wrapper = shallow(<Header />);
+    expect(wrapper.find('img').length).toEqual(1);
+    expect(wrapper.find('h1').length).toEqual(1);
   });
 });

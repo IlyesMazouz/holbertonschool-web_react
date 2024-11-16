@@ -1,24 +1,27 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const NotificationItem = ({ type, value, onClick }) => {
-  const style = type === "urgent" ? { color: "red" } : { color: "black" };
-  
+
+function NotificationItem({ type = 'default', html, value }) {
+  const liProps = {
+    "data-priority": type
+  };
+
+  if (html) {
+    liProps.dangerouslySetInnerHTML = html;
+  } else {
+    liProps.children = value;
+  }
+
   return (
-    <li style={style} onClick={onClick}>
-      {value}
-    </li>
+    <li {...liProps} />
   );
-};
+}
 
 NotificationItem.propTypes = {
   type: PropTypes.string,
-  value: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
-};
-
-NotificationItem.defaultProps = {
-  type: "default",
+  html: PropTypes.shape({ __html: PropTypes.string }),
+  value: PropTypes.string
 };
 
 export default NotificationItem;

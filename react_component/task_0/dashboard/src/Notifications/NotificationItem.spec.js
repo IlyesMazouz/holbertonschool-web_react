@@ -1,21 +1,22 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { shallow } from 'enzyme';
 import NotificationItem from './NotificationItem';
 
-describe('NotificationItem', () => {
-  test('renders with blue color and default type', () => {
-    render(<NotificationItem type="default" value="Test notification" />);
-    const liElement = screen.getByText(/Test notification/i);
 
-    expect(liElement).toHaveStyle('color: blue');
-    expect(liElement).toHaveAttribute('data-notification-type', 'default');
+describe('NotificationItem', () => {
+  it('renders without crashing', () => {
+    shallow(<NotificationItem type="default" value="test" />);
   });
 
-  test('renders with red color and urgent type', () => {
-    render(<NotificationItem type="urgent" value="Urgent notification" />);
-    const liElement = screen.getByText(/Urgent notification/i);
+  it('renders correct html for type and value', () => {
+    const wrapper = shallow(<NotificationItem type="default" value="test" />);
+    expect(wrapper.find('li').prop('data-priority')).toEqual('default');  
+    expect(wrapper.text()).toEqual('test');
+  });
 
-    expect(liElement).toHaveStyle('color: red');
-    expect(liElement).toHaveAttribute('data-notification-type', 'urgent');
+  it('renders correct html with dangerouslySetInnerHTML', () => {
+    const htmlContent = { __html: '<u>test</u>' };
+    const wrapper = shallow(<NotificationItem html={htmlContent} type="default" />);
+    expect(wrapper.html()).toContain('<u>test</u>');
   });
 });
