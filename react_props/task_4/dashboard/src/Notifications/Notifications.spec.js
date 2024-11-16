@@ -1,19 +1,35 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import Notifications from './Notifications';
+import React from "react";
+import { shallow } from "enzyme";
+import Notifications from "./Notifications";
 
-describe('Notifications', () => {
-  test('renders the list of notifications', () => {
-    const notificationsList = [
-      { id: 1, type: 'default', value: 'New course available' },
-      { id: 2, type: 'urgent', value: 'New resume available' },
-      { id: 3, type: 'urgent', html: { __html: '<strong>Urgent requirement</strong> - complete by EOD' } },
+describe("Notifications Component", () => {
+  it("renders Your notifications text in all cases", () => {
+    const wrapper = shallow(<Notifications />);
+    expect(wrapper.find(".notifications-title p").text()).toEqual(
+      "Your notifications"
+    );
+  });
+
+  it("does not render notification items when displayDrawer is false", () => {
+    const wrapper = shallow(<Notifications displayDrawer={false} />);
+    expect(wrapper.find(".Notifications").exists()).toBe(false);
+  });
+
+  it("renders notification items when displayDrawer is true", () => {
+    const notifications = [
+      { id: 1, type: "default", value: "New course available" },
     ];
+    const wrapper = shallow(
+      <Notifications displayDrawer={true} notifications={notifications} />
+    );
+    expect(wrapper.find(".Notifications").exists()).toBe(true);
+    expect(wrapper.find("NotificationItem").length).toBe(1);
+  });
 
-    render(<Notifications notifications={notificationsList} />);
-
-    expect(screen.getByText(/New course available/i)).toBeInTheDocument();
-    expect(screen.getByText(/New resume available/i)).toBeInTheDocument();
-    expect(screen.getByText(/Urgent requirement/i)).toBeInTheDocument();
+  it("displays No new notification for now when notifications array is empty", () => {
+    const wrapper = shallow(<Notifications displayDrawer={true} notifications={[]} />);
+    expect(wrapper.find(".Notifications p").text()).toEqual(
+      "No new notification for now"
+    );
   });
 });
