@@ -1,0 +1,8 @@
+.App-body{
+    padding: 50px;
+    border-bottom: 3px solid #dc1010;
+    height: 50vh;
+  }
+  .App-body > *{
+    margin: 5px;
+  }
