@@ -1,9 +1,12 @@
 import './App.css';
 import logo from './assets/holberton-logo.jpg';
 import Notifications from './Notifications';
+import { getCurrentYear, getFooterCopy } from './utils';
+import './Notifications.css';
 
 function App() {
-  const year = new Date().getFullYear();
+  const year = getCurrentYear();
+  const footerText = getFooterCopy(false);
 
   return (
     <>
@@ -18,7 +21,7 @@ function App() {
         <p>Login to access the full dashboard</p>
       </div>
       <div className="App-footer">
-        <p>Copyright {year} - holberton School</p>
+        <p>Copyright {year} - {footerText}</p>
       </div>
     </>
   );
