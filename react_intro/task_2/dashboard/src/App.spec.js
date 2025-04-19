@@ -1,24 +1,24 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
 describe('App component', () => {
-  test('renders the heading "School dashboard"', () => {
+  test('renders 2 input elements', () => {
     render(<App />);
-    const heading = screen.getByRole('heading', { name: /school dashboard/i });
-    expect(heading).toBeInTheDocument();
+    const inputs = screen.getAllByRole('textbox'); 
+    const passwordInput = screen.getByLabelText(/password/i);
+    expect(inputs.length + (passwordInput ? 1 : 0)).toBe(2);
   });
 
-  test('renders correct text in the body and footer', () => {
+  test('renders 2 label elements with text Email and Password', () => {
     render(<App />);
-    const bodyText = screen.getByText(/login to access the full dashboard/i);
-    const footerText = screen.getByText(/copyright/i);
-    expect(bodyText).toBeInTheDocument();
-    expect(footerText).toBeInTheDocument();
+    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
   });
 
-  test('renders the Holberton logo image', () => {
+  test('renders a button with text OK', () => {
     render(<App />);
-    const logo = screen.getByAltText(/holberton logo/i);
-    expect(logo).toBeInTheDocument();
+    const button = screen.getByRole('button', { name: /ok/i });
+    expect(button).toBeInTheDocument();
   });
 });
