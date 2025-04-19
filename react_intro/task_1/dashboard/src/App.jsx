@@ -5,8 +5,6 @@ import { getCurrentYear, getFooterCopy } from './utils';
 import Notifications from './Notifications';
 
 function App() {
-  const isIndex = false; 
-
   return (
     <>
       <div className="root-notifications">
@@ -14,16 +12,15 @@ function App() {
       </div>
       <div className="App">
         <div className="App-header">
-          <img src={logo} alt="holberton logo" />
+          <img src={logo} alt="Holberton logo" />
           <h1>School dashboard</h1>
         </div>
-        <hr />
         <div className="App-body">
           <p>Login to access the full dashboard</p>
         </div>
         <div className="App-footer">
           <p>
-            Copyright {getCurrentYear()} - {getFooterCopy(isIndex)}
+            Copyright {getCurrentYear()} - {getFooterCopy(false)}
           </p>
         </div>
       </div>
