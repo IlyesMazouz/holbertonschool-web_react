@@ -5,18 +5,15 @@ import Notifications from './Notifications';
 import './Notifications.css';
 
 function App() {
-  const year = getCurrentYear();
-  const footerText = getFooterCopy(false); 
-
   return (
     <>
-    <div className="root-notifications">
-        <Notifications />
-      </div>
-
       <div className="App-header">
         <img src={logo} alt="holberton logo" />
         <h1>School dashboard</h1>
+      </div>
+
+      <div className="root-notifications">
+        <Notifications />
       </div>
 
       <div className="App-body">
@@ -30,7 +27,7 @@ function App() {
 
       <div className="App-footer">
         <p>
-          Copyright {year} - {footerText}
+          Copyright {getCurrentYear()} - {getFooterCopy(false)}
         </p>
       </div>
     </>
