@@ -8,7 +8,9 @@ import './App.css';
 function App() {
   return (
     <Fragment>
-      <Notifications />
+      <div className="root-notifications">
+        <Notifications />
+      </div>
       <Header />
       <Login />
       <Footer />
