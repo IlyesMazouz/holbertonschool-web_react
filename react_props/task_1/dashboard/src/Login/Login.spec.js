@@ -1,29 +1,24 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Login from './Login';
 
 describe('Login component', () => {
-  test('contains 2 labels, 2 inputs, and 1 button', () => {
+  test('renders 2 input elements', () => {
     render(<Login />);
-    
-    const labels = screen.getAllByText(/email:|password:/i); 
     const inputs = screen.getAllByRole('textbox');
     const passwordInput = screen.getByLabelText(/password/i);
-    const button = screen.getByRole('button', { name: /ok/i });
-
-    expect(labels).toHaveLength(2);
-    expect(inputs).toHaveLength(1);
-    expect(passwordInput).toBeInTheDocument();
-    expect(button).toBeInTheDocument();
+    expect(inputs.length + (passwordInput ? 1 : 0)).toBe(2);
   });
 
-  test('focuses the email input when its label is clicked', () => {
+  test('renders 2 label elements with text Email and Password', () => {
     render(<Login />);
-  
-    const emailInput = screen.getByLabelText(/email/i);
-  
-    emailInput.focus();
-  
-    expect(emailInput).toHaveFocus();
-  });  
+    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+  });
+
+  test('renders a button with text OK', () => {
+    render(<Login />);
+    const button = screen.getByRole('button', { name: /ok/i });
+    expect(button).toBeInTheDocument();
+  });
 });
