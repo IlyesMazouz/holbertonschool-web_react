@@ -30,4 +30,12 @@ export default [
       ],
     },
   },
+  {
+    files: ['**/*.spec.js'],
+    languageOptions: {
+      globals: {
+        ...globals.jest,
+      },
+    },
+  },
 ]
