@@ -1,7 +1,8 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import eslintPluginJest from 'eslint-plugin-jest';
 
 export default [
   { ignores: ['dist'] },
@@ -30,4 +31,18 @@ export default [
       ],
     },
   },
-]
+  {
+    files: ['**/*.spec.js'],
+    languageOptions: {
+      globals: {
+        ...globals.jest, 
+      },
+    },
+    plugins: {
+      jest: eslintPluginJest,
+    },
+    rules: {
+      ...eslintPluginJest.configs.recommended.rules,
+    },
+  },
+];
