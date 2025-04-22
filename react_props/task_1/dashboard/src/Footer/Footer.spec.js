@@ -1,10 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Footer from './Footer';
+import { getFooterCopy } from '../utils/utils';
 
 describe('Footer component', () => {
-  test('renders footer with copyright', () => {
+  test('renders correct copyright', () => {
     render(<Footer />);
-    expect(screen.getByText(/Copyright/i)).toBeInTheDocument();
+    const expectedText = getFooterCopy(true);
+    expect(screen.getByText((text) => text.includes(expectedText))).toBeInTheDocument();
   });
 });
