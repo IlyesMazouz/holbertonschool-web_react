@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import CourseListRow from './CourseListRow';
 import './CourseList.css';
 
-function CourseList({ courses = [] }) {
+const CourseList = ({ courses = [] }) => {
   return (
     <table id="CourseList">
       <thead>
@@ -25,6 +24,6 @@ function CourseList({ courses = [] }) {
       </tbody>
     </table>
   );
-}
+};
 
 export default CourseList;

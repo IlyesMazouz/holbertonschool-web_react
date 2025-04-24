@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import Notifications from "../Notifications/Notifications";
 import Header from '../Header/Header';
-import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
-import CourseList from '../CourseList/CourseList';
 import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import { getLatestNotification } from '../utils/utils';
 import './App.css';
+
+import WithLogging from '../HOC/WithLogging';
+import LoginBase from '../Login/Login';
+import CourseListBase from '../CourseList/CourseList';
+
+const Login = WithLogging(LoginBase);
+const CourseList = WithLogging(CourseListBase);
 
 class App extends Component {
   static defaultProps = {
