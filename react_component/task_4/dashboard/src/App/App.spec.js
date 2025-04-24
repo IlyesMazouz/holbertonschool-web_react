@@ -29,17 +29,13 @@ describe('App component', () => {
   test('calls logOut function when Ctrl + H keys are pressed', () => {
     const logOutMock = jest.fn();
     render(<App logOut={logOutMock} />);
-
     fireEvent.keyDown(window, { key: 'h', ctrlKey: true });
-
     expect(logOutMock).toHaveBeenCalledTimes(1);
   });
 
   test('shows alert with message "Logging you out" when Ctrl + H keys are pressed', () => {
     render(<App />);
-
     fireEvent.keyDown(window, { key: 'h', ctrlKey: true });
-
     expect(global.alert).toHaveBeenCalledWith('Logging you out');
   });
 
@@ -60,6 +56,6 @@ describe('App component', () => {
   });
 
   afterEach(() => {
-    global.alert.mockRestore();
+    global.alert.mockClear();
   });
 });

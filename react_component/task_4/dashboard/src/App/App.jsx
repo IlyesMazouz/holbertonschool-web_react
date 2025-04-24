@@ -50,7 +50,7 @@ class App extends Component {
     const { isLoggedIn, notificationsList, coursesList } = this.state;
 
     return (
-      <React.Fragment>
+      <>
         <div className="root-notifications">
           <Notifications notifications={notificationsList} />
         </div>
@@ -68,7 +68,7 @@ class App extends Component {
           <p>Holberton School News goes here</p>
         </BodySection>
         <Footer />
-      </React.Fragment>
+      </>
     );
   }
 }
