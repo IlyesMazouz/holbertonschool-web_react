@@ -4,6 +4,8 @@ import Header from '../Header/Header';
 import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
+import BodySection from '../BodySection/BodySection';
+import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import { getLatestNotification } from '../utils/utils';
 import './App.css';
 
@@ -48,14 +50,25 @@ class App extends Component {
     const { isLoggedIn, notificationsList, coursesList } = this.state;
 
     return (
-      <React.Fragment>
+      <>
         <div className="root-notifications">
           <Notifications notifications={notificationsList} />
         </div>
         <Header />
-        {isLoggedIn ? <CourseList courses={coursesList} /> : <Login />}
+        {isLoggedIn ? (
+          <BodySectionWithMarginBottom title="Course list">
+            <CourseList courses={coursesList} />
+          </BodySectionWithMarginBottom>
+        ) : (
+          <BodySectionWithMarginBottom title="Log in to continue">
+            <Login />
+          </BodySectionWithMarginBottom>
+        )}
+        <BodySection title="News from the School">
+          <p>Holberton School News goes here</p>
+        </BodySection>
         <Footer />
-      </React.Fragment>
+      </>
     );
   }
 }
