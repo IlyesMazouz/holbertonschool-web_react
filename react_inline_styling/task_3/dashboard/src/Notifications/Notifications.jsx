@@ -24,12 +24,14 @@ class Notifications extends PureComponent {
 
     return (
       <>
-        <button
-          className={css(styles.menuItem)}
-          onClick={this.handleClick}
-        >
-          Notification
-        </button>
+        {!displayDrawer && (
+          <button
+            className={css(styles.menuItem)}
+            onClick={this.handleClick}
+          >
+            Your notification
+          </button>
+        )}
 
         {displayDrawer && (
           <div className={css(styles.notificationsContainer)}>
@@ -38,7 +40,7 @@ class Notifications extends PureComponent {
               <button
                 className={css(styles.closeButton)}
                 aria-label="Close"
-                onClick={this.handleClick} 
+                onClick={this.handleClick}
               >
                 <img
                   src={closeButton}

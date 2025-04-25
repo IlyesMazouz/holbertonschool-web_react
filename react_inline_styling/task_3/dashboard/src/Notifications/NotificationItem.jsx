@@ -7,22 +7,21 @@ class NotificationItem extends PureComponent {
   };
 
   render() {
-    const { type, value, html, onClick } = this.props; // Destructure onClick
+    const { type, value, html, onClick } = this.props; 
     const itemClass = css(styles.item, this.getStyle(type));
 
-    // If html exists, wrap it in an object with __html key
     const content = html ? (
       <li
         className={itemClass}
         data-notification-type={type}
-        dangerouslySetInnerHTML={{ __html: html }} // Fixed this part
-        onClick={onClick} // Call onClick when clicked
+        dangerouslySetInnerHTML={{ __html: html }} 
+        onClick={onClick} 
       />
     ) : (
       <li
         className={itemClass}
         data-notification-type={type}
-        onClick={onClick} // Call onClick when clicked
+        onClick={onClick} 
       >
         {value}
       </li>
