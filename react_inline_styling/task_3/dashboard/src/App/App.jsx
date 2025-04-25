@@ -60,7 +60,7 @@ class App extends Component {
       <>
         <div className={css(styles.body)}>
           <div className="root-notifications">
-          <Notifications displayDrawer={true} notifications={notificationsList} />
+          <Notifications displayDrawer={false} notifications={notificationsList} />
           </div>
           <Header />
           {isLoggedIn ? (
