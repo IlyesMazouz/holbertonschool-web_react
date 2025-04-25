@@ -6,27 +6,23 @@ class NotificationItem extends PureComponent {
     return type === 'urgent' ? styles.urgent : styles.default;
   };
 
-  handleClick = () => {
-    const { id, markAsRead } = this.props;
-    if (markAsRead) markAsRead(id);
-  };
-
   render() {
-    const { type, value, html } = this.props;
+    const { type, value, html, onClick } = this.props; // Destructure onClick
     const itemClass = css(styles.item, this.getStyle(type));
 
+    // If html exists, wrap it in an object with __html key
     const content = html ? (
       <li
         className={itemClass}
         data-notification-type={type}
-        dangerouslySetInnerHTML={html}
-        onClick={this.handleClick}
+        dangerouslySetInnerHTML={{ __html: html }} // Fixed this part
+        onClick={onClick} // Call onClick when clicked
       />
     ) : (
       <li
         className={itemClass}
         data-notification-type={type}
-        onClick={this.handleClick}
+        onClick={onClick} // Call onClick when clicked
       >
         {value}
       </li>
@@ -40,11 +36,10 @@ const styles = StyleSheet.create({
   item: {
     padding: '10px 8px',
     fontSize: '14px',
-    borderBottom: '1px solid black',
-    width: '100%', 
     '@media (max-width: 900px)': {
-      fontSize: '20px', 
-      padding: '10px 8px', 
+      width: '100%',
+      fontSize: '20px',
+      borderBottom: '1px solid black',
     },
   },
   default: {
@@ -58,6 +53,7 @@ const styles = StyleSheet.create({
 NotificationItem.defaultProps = {
   type: 'default',
   markAsRead: () => {},
+  onClick: () => {},
 };
 
 export default NotificationItem;
