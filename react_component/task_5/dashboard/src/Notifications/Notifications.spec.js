@@ -1,6 +1,8 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen, cleanup } from '@testing-library/react';
 import Notifications from './Notifications';
+
+afterEach(cleanup);
 
 const mockNotifications = [
   { id: 1, type: 'default', value: 'New course available' },
@@ -39,5 +41,25 @@ describe('Notifications Component', () => {
     fireEvent.click(screen.getByText(/New course available/i));
     expect(consoleSpy).toHaveBeenCalledWith('Notification 1 has been marked as read');
     consoleSpy.mockRestore();
+  });
+
+  test('does not re-render when notifications length is the same', () => {
+    const { rerender } = render(
+      <Notifications displayDrawer={true} notifications={mockNotifications} />
+    );
+    const spy = jest.spyOn(Notifications.prototype, 'render');
+    rerender(<Notifications displayDrawer={true} notifications={[...mockNotifications]} />);
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
+  });
+
+  test('re-renders when notifications length changes', () => {
+    const { rerender } = render(
+      <Notifications displayDrawer={true} notifications={mockNotifications} />
+    );
+    const spy = jest.spyOn(Notifications.prototype, 'render');
+    rerender(<Notifications displayDrawer={true} notifications={[...mockNotifications, { id: 4, type: 'default', value: 'New one' }]} />);
+    expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
   });
 });
