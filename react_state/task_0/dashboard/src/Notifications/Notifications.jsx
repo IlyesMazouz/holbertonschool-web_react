@@ -1,9 +1,16 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import NotificationItem from './NotificationItem';
 import closeButton from '../assets/close-button.png';
 
-class Notifications extends PureComponent {
+class Notifications extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.displayDrawer !== this.props.displayDrawer) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
     const { notifications, displayDrawer, handleDisplayDrawer, handleHideDrawer } = this.props;
 
@@ -12,7 +19,7 @@ class Notifications extends PureComponent {
         {!displayDrawer && (
           <button
             className={css(styles.menuItem)}
-            onClick={handleDisplayDrawer} 
+            onClick={handleDisplayDrawer}
           >
             Your notification
           </button>
@@ -117,29 +124,6 @@ const styles = StyleSheet.create({
   ul: {
     paddingLeft: '20px',
     margin: 0,
-    '@media (max-width: 900px)': {
-      padding: 0,
-      listStyle: 'none',
-    },
-  },
-  '@keyframes bounce': {
-    '0%': {
-      transform: 'translateY(0)',
-    },
-    '50%': {
-      transform: 'translateY(-5px)',
-    },
-    '100%': {
-      transform: 'translateY(5px)',
-    },
-  },
-  '@keyframes fade': {
-    '0%': {
-      opacity: 0.5,
-    },
-    '100%': {
-      opacity: 1,
-    },
   },
 });
 

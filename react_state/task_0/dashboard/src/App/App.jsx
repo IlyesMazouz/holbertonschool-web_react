@@ -34,7 +34,7 @@ class App extends Component {
         { id: 2, name: 'Webpack', credit: 20 },
         { id: 3, name: 'React', credit: 40 },
       ],
-      displayDrawer: false, 
+      displayDrawer: false,
     };
   }
 

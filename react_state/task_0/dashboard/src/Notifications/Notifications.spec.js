@@ -35,10 +35,17 @@ describe('Notifications Component', () => {
     expect(screen.getByText(/no new notification for now/i)).toBeInTheDocument();
   });
 
-  test('logs to console when clicking a notification item', () => {
-    render(<Notifications displayDrawer={true} notifications={mockNotifications} />);
-    const notificationItem = screen.getByText(/new course available/i);
-    fireEvent.click(notificationItem);
-    expect(console.log).toHaveBeenCalled();
+  test('closes the drawer when the close button is clicked', () => {
+    const handleHideDrawer = jest.fn();
+    render(<Notifications displayDrawer={true} notifications={mockNotifications} handleHideDrawer={handleHideDrawer} />);
+    fireEvent.click(screen.getByRole('button'));
+    expect(handleHideDrawer).toHaveBeenCalledTimes(1);
+  });
+
+  test('calls handleDisplayDrawer when the menu item is clicked', () => {
+    const handleDisplayDrawer = jest.fn();
+    render(<Notifications handleDisplayDrawer={handleDisplayDrawer} />);
+    fireEvent.click(screen.getByRole('button'));
+    expect(handleDisplayDrawer).toHaveBeenCalledTimes(1);
   });
 });
