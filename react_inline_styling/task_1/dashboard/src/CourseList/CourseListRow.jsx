@@ -1,11 +1,11 @@
 import React from 'react';
 
 const headerStyle = {
-  backgroundColor: 'rgba(222, 181, 181, 0.27)' 
+  backgroundColor: '#deb5b545', 
 };
 
 const rowStyle = {
-  backgroundColor: 'rgba(245, 245, 245, 0.67)' 
+  backgroundColor: '#f5f5f5ab', 
 };
 
 function CourseListRow({ isHeader, textFirstCell, textSecondCell }) {
