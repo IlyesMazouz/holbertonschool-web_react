@@ -1,0 +1,11 @@
+.App {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.Login,
+.CourseList {
+  margin-top: 30px;
+}
