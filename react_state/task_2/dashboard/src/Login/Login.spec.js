@@ -49,4 +49,20 @@ describe('Login component', () => {
     expect(screen.queryByLabelText(/email/i).value).toBe('test@example.com');
     expect(screen.queryByLabelText(/password/i).value).toBe('password123');
   });
+
+  test('calls logIn prop with email and password on submit', () => {
+    const mockLogIn = jest.fn();
+    render(<Login logIn={mockLogIn} />);
+
+    const emailInput = screen.getByLabelText(/email/i);
+    const passwordInput = screen.getByLabelText(/password/i);
+
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'password123' } });
+
+    const submitButton = screen.getByRole('button', { name: /login/i });
+    fireEvent.click(submitButton);
+
+    expect(mockLogIn).toHaveBeenCalledWith('test@example.com', 'password123');
+  });
 });

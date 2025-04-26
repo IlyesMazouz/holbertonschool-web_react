@@ -5,11 +5,13 @@ import Footer from '../Footer/Footer';
 import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import { getLatestNotification } from '../utils/utils';
-import { StyleSheet, css } from 'aphrodite';
+
 import WithLogging from '../HOC/WithLogging';
 import LoginBase from '../Login/Login';
 import CourseListBase from '../CourseList/CourseList';
-import { user, logOut, newContext } from '../Context/context';
+
+import { StyleSheet, css } from 'aphrodite';
+import { newContext } from '../Context/context';
 
 const Login = WithLogging(LoginBase);
 const CourseList = WithLogging(CourseListBase);
@@ -17,12 +19,12 @@ const CourseList = WithLogging(CourseListBase);
 class App extends Component {
   constructor(props) {
     super(props);
-    this.logIn = this.logIn.bind(this);
-    this.logOut = this.logOut.bind(this);
-
     this.state = {
-      user: { ...user },
-      logOut: this.logOut,
+      user: {
+        email: '',
+        password: '',
+        isLoggedIn: false,
+      },
       notificationsList: [
         { id: 1, type: 'default', value: 'New course available' },
         { id: 2, type: 'urgent', value: 'New resume available' },
@@ -46,9 +48,9 @@ class App extends Component {
   }
 
   handleKeyDown = (event) => {
-    if (event.ctrlKey && event.key === 'h') {
+    if (event.ctrlKey && (event.key === 'h' || event.key === 'H')) {
       alert('Logging you out');
-      this.state.logOut();
+      this.logOut();
     }
   };
 
@@ -60,7 +62,7 @@ class App extends Component {
     this.setState({ displayDrawer: false });
   };
 
-  logIn(email, password) {
+  logIn = (email, password) => {
     this.setState({
       user: {
         email,
@@ -68,19 +70,23 @@ class App extends Component {
         isLoggedIn: true,
       },
     });
-  }
+  };
 
-  logOut() {
+  logOut = () => {
     this.setState({
-      user: { ...user },
+      user: {
+        email: '',
+        password: '',
+        isLoggedIn: false,
+      },
     });
-  }
+  };
 
   render() {
-    const { notificationsList, coursesList, displayDrawer, user } = this.state;
+    const { user, notificationsList, coursesList, displayDrawer } = this.state;
 
     return (
-      <newContext.Provider value={{ user, logOut: this.state.logOut }}>
+      <newContext.Provider value={{ user, logOut: this.logOut }}>
         <div className={css(styles.body)}>
           <div className="root-notifications">
             <Notifications
@@ -97,14 +103,14 @@ class App extends Component {
             </BodySectionWithMarginBottom>
           ) : (
             <BodySectionWithMarginBottom title="Log in to continue">
-              <Login logIn={this.logIn} email={user.email} password={user.password} />
+              <Login logIn={this.logIn} />
             </BodySectionWithMarginBottom>
           )}
           <BodySection title="News from the School">
             <p>Holberton School News goes here</p>
           </BodySection>
-          <Footer className={css(styles.footer)} />
         </div>
+        <Footer className={css(styles.footer)} />
       </newContext.Provider>
     );
   }
