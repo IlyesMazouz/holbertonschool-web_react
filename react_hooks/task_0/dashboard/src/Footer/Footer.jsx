@@ -4,19 +4,12 @@ import { getCurrentYear, getFooterCopy } from '../utils/utils';
 import { newContext } from '../Context/context';
 
 function Footer() {
-  const { user, logOut } = useContext(newContext);
+  const { user } = useContext(newContext);
 
   return (
     <div className="App-footer">
       <p>Copyright {getCurrentYear()} - {getFooterCopy(false)}</p>
-      {user?.isLoggedIn ? (
-        <>
-          <p>Welcome {user.email}</p>
-          <p>
-            <a href="#" onClick={logOut}>Logout</a>
-          </p>
-        </>
-      ) : (
+      {user?.isLoggedIn && (
         <p>
           <a href="#">Contact us</a>
         </p>
