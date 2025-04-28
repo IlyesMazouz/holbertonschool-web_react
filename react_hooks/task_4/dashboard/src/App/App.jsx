@@ -82,7 +82,7 @@ const App = () => {
             ]} />
           </BodySectionWithMarginBottom>
         ) : (
-          <BodySectionWithMarginBottom title="Login to access the full dashboard">
+          <BodySectionWithMarginBottom title="Log in to continue">
             <Login logIn={logIn} />
           </BodySectionWithMarginBottom>
         )}
