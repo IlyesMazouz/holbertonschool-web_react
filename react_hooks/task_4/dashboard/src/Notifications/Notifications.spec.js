@@ -1,6 +1,8 @@
 import React from 'react';
-import { render, fireEvent, screen, cleanup } from '@testing-library/react';
+import { render, fireEvent, screen, cleanup, waitFor } from '@testing-library/react';
 import Notifications from './Notifications';
+import axiosMock from 'jest-mock-axios';
+import '@testing-library/jest-dom/extend-expect';
 
 afterEach(cleanup);
 
@@ -11,6 +13,7 @@ const mockNotifications = [
 ];
 
 describe('Notifications Component', () => {
+  
   test('always renders the "Your notifications" menu item', () => {
     render(<Notifications />);
     expect(screen.getByText(/your notifications/i)).toBeInTheDocument();
@@ -60,5 +63,27 @@ describe('Notifications Component', () => {
     const notificationItems = screen.getAllByRole('listitem');
     fireEvent.click(notificationItems[0]);
     expect(markNotificationAsRead).toHaveBeenCalledWith(1);
+  });
+
+  test('fetches notifications dynamically from API', async () => {
+    axiosMock.get.mockResolvedValueOnce({ data: mockNotifications });
+
+    render(<Notifications displayDrawer={true} />);
+    
+    await waitFor(() => screen.getByText('New course available'));
+    
+    expect(screen.getByText('New course available')).toBeInTheDocument();
+    expect(screen.getByText('New resume available')).toBeInTheDocument();
+    expect(screen.getByText('Urgent requirement')).toBeInTheDocument();
+  });
+
+  test('handles errors gracefully when fetching notifications fails', async () => {
+    axiosMock.get.mockRejectedValueOnce(new Error('Network error'));
+
+    render(<Notifications displayDrawer={true} />);
+    
+    await waitFor(() => screen.getByText('No new notifications for now'));
+    
+    expect(screen.getByText('No new notifications for now')).toBeInTheDocument();
   });
 });

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CourseListRow from './CourseListRow';
 import { StyleSheet, css } from 'aphrodite';
+import axios from 'axios';
 
 const styles = StyleSheet.create({
   courseList: {
@@ -16,7 +17,26 @@ const styles = StyleSheet.create({
   },
 });
 
-const CourseList = ({ courses = [] }) => {
+const CourseList = ({ userAuthStatus = true }) => {
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      if (userAuthStatus) {
+        try {
+          const response = await axios.get('/courses.json');
+          setCourses(response.data);
+        } catch (error) {
+          if (process.env.NODE_ENV === 'development') {
+            console.error('Error fetching courses:', error);
+          }
+        }
+      }
+    };
+
+    fetchCourses();
+  }, [userAuthStatus]);
+
   return (
     <table className={css(styles.courseList)}>
       <thead>

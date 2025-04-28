@@ -2,22 +2,35 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import NotificationItem from './NotificationItem';
 import closeButton from '../assets/close-button.png';
+import axios from 'axios';
 
 const Notifications = React.memo(({
   displayDrawer,
   handleDisplayDrawer,
   handleHideDrawer,
-  notifications = [],
+  markNotificationAsRead,
 }) => {
-  const [notificationList, setNotificationList] = useState(notifications);
+  const [notificationList, setNotificationList] = useState([]);
 
   useEffect(() => {
-    setNotificationList(notifications);
-  }, [notifications]);
+    const fetchNotifications = async () => {
+      try {
+        const response = await axios.get('/notifications.json');
+        setNotificationList(response.data);
+      } catch (error) {
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Error fetching notifications:', error);
+        }
+      }
+    };
 
-  const markNotificationAsRead = useCallback((id) => {
+    fetchNotifications();
+  }, []);
+
+  const handleMarkAsRead = useCallback((id) => {
     console.log(`Notification ${id} has been marked as read`);
-    setNotificationList((prevList) => prevList.filter((notification) => notification.id !== id));
+
+    setNotificationList((prevList) => prevList.filter(notification => notification.id !== id));
   }, []);
 
   return (
@@ -52,16 +65,20 @@ const Notifications = React.memo(({
                 : 'Here is the list of notifications'}
             </p>
             <ul className={css(styles.ul)}>
-              {notificationList.map((notification) => (
-                <NotificationItem
-                  key={notification.id}
-                  id={notification.id}
-                  type={notification.type}
-                  html={notification.html}
-                  value={notification.value}
-                  markAsRead={markNotificationAsRead}
-                />
-              ))}
+              {Array.isArray(notificationList) && notificationList.length > 0 ? (
+                notificationList.map((notification) => (
+                  <NotificationItem
+                    key={notification.id}
+                    id={notification.id}
+                    type={notification.type}
+                    html={notification.html}
+                    value={notification.value}
+                    markAsRead={handleMarkAsRead}
+                  />
+                ))
+              ) : (
+                <li>No notifications available</li>
+              )}
             </ul>
           </div>
         </div>
@@ -69,11 +86,7 @@ const Notifications = React.memo(({
     </>
   );
 }, (prevProps, nextProps) => {
-  return (
-    prevProps.displayDrawer === nextProps.displayDrawer &&
-    prevProps.notifications.length === nextProps.notifications.length &&
-    prevProps.notifications.every((n, i) => n.id === nextProps.notifications[i].id)
-  );
+  return prevProps.displayDrawer === nextProps.displayDrawer;
 });
 
 const styles = StyleSheet.create({

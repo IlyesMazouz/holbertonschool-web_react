@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Notifications from "../Notifications/Notifications";
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -10,6 +10,7 @@ import LoginBase from '../Login/Login';
 import CourseListBase from '../CourseList/CourseList';
 import { StyleSheet, css } from 'aphrodite';
 import { newContext } from '../Context/context';
+import axios from 'axios';
 
 const Login = WithLogging(LoginBase);
 const CourseList = WithLogging(CourseListBase);
@@ -21,13 +22,37 @@ const App = () => {
     isLoggedIn: false,
   });
 
-  const [notifications, setNotifications] = useState([
-    { id: 1, type: 'default', value: 'New course available' },
-    { id: 2, type: 'urgent', value: 'New resume available' },
-    { id: 3, type: 'urgent', html: getLatestNotification() },
-  ]);
-
+  const [notifications, setNotifications] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [displayDrawer, setDisplayDrawer] = useState(false);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await axios.get('/path/to/notifications.json');
+        setNotifications(response.data);
+      } catch (error) {
+        console.error('Error fetching notifications data:', error);
+      }
+    };
+
+    fetchNotifications();
+  }, []);
+
+  useEffect(() => {
+    if (user.isLoggedIn) {
+      const fetchCourses = async () => {
+        try {
+          const response = await axios.get('/path/to/courses.json');
+          setCourses(response.data);
+        } catch (error) {
+          console.error('Error fetching courses data:', error);
+        }
+      };
+
+      fetchCourses();
+    }
+  }, [user.isLoggedIn]);
 
   const logIn = useCallback((email, password) => {
     setUser({
@@ -47,9 +72,12 @@ const App = () => {
 
   const markNotificationAsRead = useCallback((id) => {
     console.log(`Notification ${id} has been marked as read`);
-    setNotifications((prevNotifications) =>
-      prevNotifications.filter((notification) => notification.id !== id)
-    );
+    setNotifications((prevNotifications) => {
+      if (Array.isArray(prevNotifications)) {
+        return prevNotifications.filter((notification) => notification.id !== id);
+      }
+      return prevNotifications;
+    });
   }, []);
 
   const handleDisplayDrawer = useCallback(() => {
@@ -75,11 +103,7 @@ const App = () => {
         <Header logOut={logOut} />
         {user.isLoggedIn ? (
           <BodySectionWithMarginBottom title="Course list">
-            <CourseList courses={[
-              { id: 1, name: 'ES6', credit: 60 },
-              { id: 2, name: 'Webpack', credit: 20 },
-              { id: 3, name: 'React', credit: 40 },
-            ]} />
+            <CourseList courses={courses} />
           </BodySectionWithMarginBottom>
         ) : (
           <BodySectionWithMarginBottom title="Log in to continue">

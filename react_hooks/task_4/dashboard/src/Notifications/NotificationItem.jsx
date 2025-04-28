@@ -40,7 +40,7 @@ NotificationItem.propTypes = {
   id: PropTypes.number.isRequired,
   type: PropTypes.string,
   value: PropTypes.string,
-  html: PropTypes.string,
+  html: PropTypes.bool.isRequired,
   markAsRead: PropTypes.func.isRequired,
 };
 
