@@ -27,7 +27,7 @@ const App = () => {
     { id: 3, type: 'urgent', html: getLatestNotification() },
   ]);
 
-  const [displayDrawer, setDisplayDrawer] = useState(false);
+  const [displayDrawer, setDisplayDrawer] = useState(true);
 
   const logIn = useCallback((email, password) => {
     setUser({
@@ -75,14 +75,14 @@ const App = () => {
         <Header logOut={logOut} />
         {user.isLoggedIn ? (
           <BodySectionWithMarginBottom title="Course list">
-            <CourseList courses={[
+            <CourseList courses={[ 
               { id: 1, name: 'ES6', credit: 60 },
               { id: 2, name: 'Webpack', credit: 20 },
               { id: 3, name: 'React', credit: 40 },
             ]} />
           </BodySectionWithMarginBottom>
         ) : (
-          <BodySectionWithMarginBottom title="Log in to continue">
+          <BodySectionWithMarginBottom title="Login to access the full dashboard">
             <Login logIn={logIn} />
           </BodySectionWithMarginBottom>
         )}

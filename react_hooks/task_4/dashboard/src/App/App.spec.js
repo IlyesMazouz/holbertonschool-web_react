@@ -23,6 +23,12 @@ describe('App component', () => {
   test('renders CourseList component when logged in', () => {
     render(<App />);
 
+    const emailInput = screen.getByLabelText(/email/i);
+    const passwordInput = screen.getByLabelText(/password/i);
+
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'password123' } });
+
     const loginButton = screen.getByText(/log in to continue/i);
     fireEvent.click(loginButton);
 
@@ -33,6 +39,12 @@ describe('App component', () => {
     const logOutMock = jest.fn();
 
     render(<App />);
+
+    const emailInput = screen.getByLabelText(/email/i);
+    const passwordInput = screen.getByLabelText(/password/i);
+
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'password123' } });
 
     const loginButton = screen.getByText(/log in to continue/i);
     fireEvent.click(loginButton);
