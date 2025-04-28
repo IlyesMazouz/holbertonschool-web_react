@@ -3,7 +3,12 @@ import { StyleSheet, css } from 'aphrodite';
 import NotificationItem from './NotificationItem';
 import closeButton from '../assets/close-button.png';
 
-const Notifications = ({ displayDrawer, handleDisplayDrawer, handleHideDrawer, notifications }) => {
+const Notifications = React.memo(({
+  displayDrawer,
+  handleDisplayDrawer,
+  handleHideDrawer,
+  notifications = [],
+}) => {
   const [notificationList, setNotificationList] = useState(notifications);
 
   useEffect(() => {
@@ -63,11 +68,13 @@ const Notifications = ({ displayDrawer, handleDisplayDrawer, handleHideDrawer, n
       )}
     </>
   );
-};
-
-Notifications.defaultProps = {
-  notifications: [],
-};
+}, (prevProps, nextProps) => {
+  return (
+    prevProps.displayDrawer === nextProps.displayDrawer &&
+    prevProps.notifications.length === nextProps.notifications.length &&
+    prevProps.notifications.every((n, i) => n.id === nextProps.notifications[i].id)
+  );
+});
 
 const styles = StyleSheet.create({
   menuItem: {
@@ -127,17 +134,4 @@ const styles = StyleSheet.create({
   },
 });
 
-function areEqual(prevProps, nextProps) {
-  return (
-    prevProps.displayDrawer === nextProps.displayDrawer &&
-    prevProps.notifications.length === nextProps.notifications.length &&
-    prevProps.notifications.every((notif, index) => 
-      notif.id === nextProps.notifications[index].id &&
-      notif.type === nextProps.notifications[index].type &&
-      notif.value === nextProps.notifications[index].value &&
-      (notif.html ? notif.html.__html : '') === (nextProps.notifications[index].html ? nextProps.notifications[index].html.__html : '')
-    )
-  );
-}
-
-export default React.memo(Notifications, areEqual);
+export default Notifications;
