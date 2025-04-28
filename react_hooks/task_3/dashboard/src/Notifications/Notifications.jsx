@@ -1,26 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import NotificationItem from './NotificationItem';
 import closeButton from '../assets/close-button.png';
 
-function Notifications({
-  displayDrawer,
-  handleDisplayDrawer,
-  handleHideDrawer,
-  notifications = [],
-}) {
+const Notifications = ({ displayDrawer, handleDisplayDrawer, handleHideDrawer, notifications }) => {
   const [notificationList, setNotificationList] = useState(notifications);
 
   useEffect(() => {
     setNotificationList(notifications);
   }, [notifications]);
 
-  const markNotificationAsRead = (id) => {
+  const markNotificationAsRead = useCallback((id) => {
     console.log(`Notification ${id} has been marked as read`);
-    setNotificationList((prevList) =>
-      prevList.filter((notification) => notification.id !== id)
-    );
-  };
+    setNotificationList((prevList) => prevList.filter((notification) => notification.id !== id));
+  }, []);
 
   return (
     <>
@@ -70,7 +63,11 @@ function Notifications({
       )}
     </>
   );
-}
+};
+
+Notifications.defaultProps = {
+  notifications: [],
+};
 
 const styles = StyleSheet.create({
   menuItem: {
@@ -83,7 +80,7 @@ const styles = StyleSheet.create({
     zIndex: 100,
     border: '2px solid red',
     borderRadius: '5px',
-    '&:hover': {
+    ':hover': {
       animation: 'bounce 0.5s 3 alternate, fade 1s 1',
     },
   },
@@ -130,4 +127,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(Notifications);
+function areEqual(prevProps, nextProps) {
+  return (
+    prevProps.displayDrawer === nextProps.displayDrawer &&
+    prevProps.notifications.length === nextProps.notifications.length &&
+    prevProps.notifications.every((notif, index) => 
+      notif.id === nextProps.notifications[index].id &&
+      notif.type === nextProps.notifications[index].type &&
+      notif.value === nextProps.notifications[index].value &&
+      (notif.html ? notif.html.__html : '') === (nextProps.notifications[index].html ? nextProps.notifications[index].html.__html : '')
+    )
+  );
+}
+
+export default React.memo(Notifications, areEqual);
