@@ -1,0 +1,27 @@
+[
+	{
+	  "id": 1,
+	  "type": "default",
+	  "html": false,
+	  "value": "New course available: 'Introduction to React'"
+	},
+	{
+	  "id": 2,
+	  "type": "urgent",
+	  "html": false,
+	  "value": "Urgent: Your course registration deadline is approaching!"
+	},
+	{
+	  "id": 3,
+	  "type": "urgent",
+	  "html": false,
+	  "value": "<strong>Important:</strong> Update your payment details to avoid disruption."
+	},
+	{
+	  "id": 4,
+	  "type": "default",
+	  "html": false,
+	  "value": "New update: Course materials for 'React Basics' are now available."
+	}
+  ]
+  
