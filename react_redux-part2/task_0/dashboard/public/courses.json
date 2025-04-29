@@ -1,0 +1,23 @@
+[
+	{
+	  "id": 1,
+	  "name": "React Basics",
+	  "credit": 3
+	},
+	{
+	  "id": 2,
+	  "name": "Advanced React",
+	  "credit": 4
+	},
+	{
+	  "id": 3,
+	  "name": "Web Development with JavaScript",
+	  "credit": 3
+	},
+	{
+	  "id": 4,
+	  "name": "Node.js and Express",
+	  "credit": 3
+	}
+  ]
+  
