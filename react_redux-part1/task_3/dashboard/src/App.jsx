@@ -11,8 +11,8 @@ import CourseListBase from './pages/CourseList/CourseList';
 import { StyleSheet, css } from 'aphrodite';
 import axios from 'axios';
 import { appReducer, initialState, APP_ACTIONS } from './appReducer';
-import { Provider } from 'react-redux'; // Import Provider from react-redux
-import store from './App/store'; // Import the Redux store (make sure store.js exists)
+import { Provider } from 'react-redux';
+import store from './App/store';
 
 const Login = WithLogging(LoginBase);
 const CourseList = WithLogging(CourseListBase);
