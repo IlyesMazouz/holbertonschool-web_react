@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import NotificationItem from '../NotificationItem/NotificationItem';
-import closeButton from '../../assets/close-button.png';
+import closeButton from '../../assets/close-icon.png';
 import axios from 'axios';
 
 const Notifications = React.memo(({
