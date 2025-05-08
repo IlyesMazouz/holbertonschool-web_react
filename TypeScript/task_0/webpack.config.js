@@ -1,22 +1,48 @@
-const path = require('path');
+const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
-    mode: 'production', 
-    entry: './js/main.ts',
-    output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')
+  mode: "development",
+  entry: "./js/main.ts",
+  
+  devtool: "inline-source-map",
+  
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true
+        }
+      }
+    ]
+  },
+  
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"]
+  },
+  
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
     },
-    resolve: {
-        extensions: ['.ts', '.js']
-    },
-    module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                use: 'ts-loader',
-                exclude: /node_modules/
-            }
-        ]
-    }
+    open: true,
+    port: 8080,
+  },
+  
+  plugins: [
+    new ForkTsCheckerWebpackPlugin(),
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: "Development"
+    })
+  ],
+  
+  output: {
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist")
+  }
 };
