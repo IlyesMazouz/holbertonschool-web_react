@@ -1,0 +1,16 @@
+{
+  "name": "task_5",
+  "version": "1.0.0",
+  "description": "Sum of Major and Minor Credits",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/main.js"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4",
+    "webpack": "^5.64.0",
+    "webpack-cli": "^4.9.1",
+    "ts-loader": "^9.2.6"
+  }
+}
