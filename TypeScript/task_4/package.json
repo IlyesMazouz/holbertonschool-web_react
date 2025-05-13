@@ -1,0 +1,14 @@
+{
+  "name": "task_4",
+  "version": "1.0.0",
+  "description": "Subject and Teacher Class Task",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/main.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+}
